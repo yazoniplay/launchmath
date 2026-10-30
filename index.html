@@ -1,0 +1,1917 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090a0f">
+  <meta name="description" content="Know what every sale is actually worth. Calculate platform fees, test pricing strategies, and forecast your digital product launch with Launch Math.">
+  <meta property="og:title" content="Launch Math — Know Your Real Numbers">
+  <meta property="og:description" content="The financial toolkit for digital creators. Calculate your real margins before you launch.">
+  <meta property="og:type" content="website">
+
+  <title>Launch Math — Know Your Real Numbers</title>
+
+  <style>
+    /* =========================================
+       LAUNCH MATH
+       Standalone production-ready landing page
+       ========================================= */
+
+    :root {
+      color-scheme: dark;
+
+      --bg: #090a0f;
+      --surface: #0e1017;
+      --surface-raised: #12151e;
+      --surface-hover: #171b25;
+
+      --text: #f1f3f8;
+      --text-secondary: #969cab;
+      --text-muted: #646b7c;
+
+      --border: #1e2230;
+      --border-hover: #303749;
+
+      --green: #2de0b3;
+      --green-dim: rgba(45, 224, 179, 0.1);
+      --purple: #7f63ff;
+      --purple-dim: rgba(127, 99, 255, 0.12);
+
+      --mono: ui-monospace, "SFMono-Regular", "Cascadia Code",
+        "Segoe UI Mono", Menlo, Consolas, monospace;
+
+      --sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Helvetica, Arial, sans-serif;
+
+      --container: 1080px;
+      --radius: 12px;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 90px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      pointer-events: none;
+      background-image:
+        radial-gradient(
+          ellipse at 50% -15%,
+          rgba(127, 99, 255, 0.095),
+          transparent 47%
+        ),
+        radial-gradient(
+          ellipse at 90% 40%,
+          rgba(45, 224, 179, 0.025),
+          transparent 35%
+        );
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    a {
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid var(--green);
+      outline-offset: 4px;
+    }
+
+    ::selection {
+      color: #07130f;
+      background: var(--green);
+    }
+
+    .container {
+      width: min(var(--container), calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    .mono {
+      font-family: var(--mono);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .muted {
+      color: var(--text-secondary);
+    }
+
+    .green {
+      color: var(--green);
+    }
+
+    /* Header */
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      height: 70px;
+      background: rgba(9, 10, 15, 0.84);
+      border-bottom: 1px solid rgba(30, 34, 48, 0.85);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      gap: 24px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      min-width: 0;
+    }
+
+    .brand-icon {
+      display: grid;
+      width: 33px;
+      height: 33px;
+      place-items: center;
+      border: 1px solid rgba(45, 224, 179, 0.3);
+      border-radius: 9px;
+      color: var(--green);
+      background: rgba(45, 224, 179, 0.07);
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .brand-name {
+      font-family: var(--mono);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: -0.035em;
+      white-space: nowrap;
+    }
+
+    .version {
+      margin-left: 5px;
+      padding: 3px 6px;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      color: var(--text-muted);
+      font-size: 9px;
+      font-weight: 500;
+      letter-spacing: 0;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
+    .nav-link {
+      color: var(--text-secondary);
+      font-size: 12px;
+      transition: color 160ms ease;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+    }
+
+    .header-cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 36px;
+      padding: 0 13px;
+      border: 1px solid var(--border-hover);
+      border-radius: 7px;
+      background: rgba(255, 255, 255, 0.025);
+      font-size: 11px;
+      font-weight: 600;
+      transition:
+        border-color 180ms ease,
+        background 180ms ease,
+        transform 180ms ease;
+    }
+
+    .header-cta:hover {
+      border-color: rgba(45, 224, 179, 0.45);
+      background: var(--green-dim);
+      transform: translateY(-1px);
+    }
+
+    /* Hero */
+
+    .hero {
+      position: relative;
+      padding: 106px 0 82px;
+      overflow: hidden;
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr;
+      justify-items: center;
+      text-align: center;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      max-width: 100%;
+      padding: 7px 11px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.018);
+      color: #aeb4c3;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.035em;
+    }
+
+    .status-dot {
+      position: relative;
+      width: 6px;
+      height: 6px;
+      flex: 0 0 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 10px rgba(45, 224, 179, 0.55);
+    }
+
+    .hero h1 {
+      max-width: 850px;
+      margin: 29px 0 20px;
+      font-size: clamp(43px, 7.4vw, 79px);
+      line-height: 1.04;
+      letter-spacing: -0.075em;
+      font-weight: 690;
+    }
+
+    .hero h1 .accent {
+      color: var(--green);
+    }
+
+    .hero-description {
+      max-width: 540px;
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 16px;
+      line-height: 1.85;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 46px;
+      padding: 0 19px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 650;
+      transition:
+        transform 160ms ease,
+        border-color 160ms ease,
+        background 160ms ease,
+        box-shadow 160ms ease;
+      cursor: pointer;
+    }
+
+    .button:active {
+      transform: translateY(1px);
+    }
+
+    .button-primary {
+      color: #06140f;
+      background: var(--green);
+      box-shadow: 0 0 25px rgba(45, 224, 179, 0.08);
+    }
+
+    .button-primary:hover {
+      background: #57ebc5;
+      box-shadow: 0 0 32px rgba(45, 224, 179, 0.16);
+      transform: translateY(-1px);
+    }
+
+    .button-secondary {
+      border-color: var(--border-hover);
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .button-secondary:hover {
+      border-color: #454c60;
+      background: rgba(255, 255, 255, 0.045);
+    }
+
+    .button-arrow {
+      font-size: 15px;
+      transition: transform 160ms ease;
+    }
+
+    .button:hover .button-arrow {
+      transform: translateX(3px);
+    }
+
+    .hero-note {
+      margin-top: 17px;
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 10px;
+    }
+
+    /* Product preview */
+
+    .preview-section {
+      padding: 0 0 96px;
+    }
+
+    .preview-shell {
+      position: relative;
+      max-width: 850px;
+      margin: 0 auto;
+      padding: 1px;
+      border: 1px solid #292e40;
+      border-radius: 14px;
+      background: linear-gradient(
+        145deg,
+        rgba(127, 99, 255, 0.21),
+        rgba(45, 224, 179, 0.09) 45%,
+        rgba(30, 34, 48, 0.5)
+      );
+      box-shadow: 0 30px 100px rgba(0, 0, 0, 0.27);
+    }
+
+    .preview {
+      overflow: hidden;
+      border-radius: 13px;
+      background: #0c0e14;
+    }
+
+    .preview-topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 49px;
+      padding: 0 19px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .preview-window {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .window-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #343949;
+    }
+
+    .window-dot:first-child {
+      background: #e77979;
+    }
+
+    .window-dot:nth-child(2) {
+      background: #e8bd69;
+    }
+
+    .window-dot:nth-child(3) {
+      background: #59c89b;
+    }
+
+    .preview-title {
+      color: #b8becc;
+      font-family: var(--mono);
+      font-size: 10px;
+    }
+
+    .preview-status {
+      color: var(--green);
+      font-family: var(--mono);
+      font-size: 9px;
+    }
+
+    .preview-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      padding: 22px;
+    }
+
+    .preview-panel {
+      min-width: 0;
+      padding: 19px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.012);
+    }
+
+    .panel-label {
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .panel-main-value {
+      margin-top: 10px;
+      font-size: clamp(25px, 4vw, 36px);
+      line-height: 1.2;
+      letter-spacing: -0.06em;
+      font-weight: 650;
+    }
+
+    .panel-caption {
+      margin-top: 6px;
+      color: var(--text-secondary);
+      font-size: 10px;
+    }
+
+    .breakdown {
+      margin-top: 20px;
+    }
+
+    .breakdown-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(30, 34, 48, 0.8);
+      color: var(--text-secondary);
+      font-size: 11px;
+    }
+
+    .breakdown-row:last-child {
+      border-bottom: 0;
+    }
+
+    .breakdown-row strong {
+      color: #dfe3ec;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .breakdown-row.total {
+      margin-top: 3px;
+      padding-top: 13px;
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .breakdown-row.total strong {
+      color: var(--green);
+      font-size: 12px;
+    }
+
+    .chart-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .chart-badge {
+      padding: 4px 7px;
+      border: 1px solid rgba(45, 224, 179, 0.18);
+      border-radius: 4px;
+      color: var(--green);
+      background: var(--green-dim);
+      font-family: var(--mono);
+      font-size: 9px;
+    }
+
+    .chart {
+      display: flex;
+      align-items: end;
+      gap: 8px;
+      height: 112px;
+      margin-top: 27px;
+      padding: 0 5px;
+      border-bottom: 1px solid #292e3b;
+      background-image: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 27px,
+        rgba(48, 54, 70, 0.4) 28px
+      );
+    }
+
+    .chart-bar {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+      height: var(--height);
+      border: 1px solid rgba(127, 99, 255, 0.24);
+      border-bottom: 0;
+      border-radius: 4px 4px 0 0;
+      background: linear-gradient(
+        to top,
+        rgba(127, 99, 255, 0.09),
+        rgba(127, 99, 255, 0.42)
+      );
+      transition: filter 180ms ease;
+    }
+
+    .chart-bar:hover {
+      filter: brightness(1.35);
+    }
+
+    .chart-bar.highlight {
+      border-color: rgba(45, 224, 179, 0.55);
+      background: linear-gradient(
+        to top,
+        rgba(45, 224, 179, 0.12),
+        rgba(45, 224, 179, 0.7)
+      );
+    }
+
+    .chart-labels {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 9px;
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 9px;
+    }
+
+    .chart-insight {
+      display: flex;
+      gap: 9px;
+      align-items: flex-start;
+      margin-top: 21px;
+      padding: 12px;
+      border: 1px solid rgba(127, 99, 255, 0.18);
+      border-radius: 7px;
+      background: rgba(127, 99, 255, 0.055);
+      color: #b6b0d9;
+      font-size: 10px;
+      line-height: 1.7;
+    }
+
+    .insight-icon {
+      color: var(--purple);
+      font-family: var(--mono);
+    }
+
+    .preview-footnote {
+      padding: 0 22px 19px;
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 9px;
+    }
+
+    /* Section shared styles */
+
+    .section {
+      padding: 82px 0;
+      border-top: 1px solid rgba(30, 34, 48, 0.8);
+    }
+
+    .section-heading {
+      max-width: 590px;
+      margin-bottom: 35px;
+    }
+
+    .section-kicker {
+      color: var(--green);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+    }
+
+    .section-heading h2 {
+      margin: 14px 0 12px;
+      font-size: clamp(29px, 4vw, 43px);
+      line-height: 1.17;
+      letter-spacing: -0.06em;
+      font-weight: 650;
+    }
+
+    .section-heading p {
+      max-width: 480px;
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 13px;
+      line-height: 1.85;
+    }
+
+    /* Features */
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 13px;
+    }
+
+    .feature-card {
+      position: relative;
+      min-width: 0;
+      padding: 23px 21px 22px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: linear-gradient(
+        150deg,
+        rgba(255, 255, 255, 0.025),
+        rgba(255, 255, 255, 0.008)
+      );
+      transition:
+        border-color 200ms ease,
+        background 200ms ease,
+        transform 200ms ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      border-color: #343a4d;
+      background: linear-gradient(
+        150deg,
+        rgba(255, 255, 255, 0.04),
+        rgba(255, 255, 255, 0.012)
+      );
+    }
+
+    .feature-number {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 10px;
+    }
+
+    .feature-symbol {
+      display: grid;
+      width: 39px;
+      height: 39px;
+      margin-top: 27px;
+      place-items: center;
+      border: 1px solid rgba(45, 224, 179, 0.18);
+      border-radius: 9px;
+      color: var(--green);
+      background: var(--green-dim);
+      font-family: var(--mono);
+      font-size: 17px;
+    }
+
+    .feature-card:nth-child(2) .feature-symbol {
+      color: #a291ff;
+      border-color: rgba(127, 99, 255, 0.25);
+      background: var(--purple-dim);
+    }
+
+    .feature-card h3 {
+      margin: 20px 0 10px;
+      font-size: 15px;
+      font-weight: 620;
+      letter-spacing: -0.025em;
+    }
+
+    .feature-card p {
+      margin: 0;
+      color: var(--text-secondary);
+      font-size: 12px;
+      line-height: 1.85;
+    }
+
+    .feature-meta {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      margin-top: 24px;
+      padding-top: 15px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 9px;
+    }
+
+    .feature-meta::before {
+      content: "";
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    /* Value proposition strip */
+
+    .value-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      padding: 30px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .value-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .value-check {
+      display: grid;
+      width: 23px;
+      height: 23px;
+      flex: 0 0 23px;
+      place-items: center;
+      border: 1px solid rgba(45, 224, 179, 0.2);
+      border-radius: 6px;
+      color: var(--green);
+      background: var(--green-dim);
+      font-size: 12px;
+    }
+
+    .value-item strong {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .value-item span:last-child {
+      display: block;
+      margin-top: 4px;
+      color: var(--text-secondary);
+      font-size: 10px;
+      line-height: 1.7;
+    }
+
+    /* Pricing */
+
+    .pricing-section {
+      padding: 90px 0 100px;
+      border-top: 1px solid rgba(30, 34, 48, 0.8);
+    }
+
+    .pricing-layout {
+      display: grid;
+      grid-template-columns: 1fr minmax(280px, 380px);
+      align-items: center;
+      gap: 65px;
+    }
+
+    .pricing-copy .section-heading {
+      margin-bottom: 25px;
+    }
+
+    .pricing-points {
+      display: grid;
+      gap: 13px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .pricing-points li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      color: #b5bbca;
+      font-size: 12px;
+    }
+
+    .pricing-points li::before {
+      content: "✓";
+      color: var(--green);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .pricing-card {
+      position: relative;
+      padding: 27px;
+      border: 1px solid #303649;
+      border-radius: 12px;
+      background:
+        radial-gradient(
+          ellipse at 100% 0%,
+          rgba(127, 99, 255, 0.1),
+          transparent 55%
+        ),
+        #0d0f16;
+      box-shadow: 0 24px 80px rgba(0, 0, 0, 0.23);
+    }
+
+    .pricing-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 5px 8px;
+      border: 1px solid rgba(45, 224, 179, 0.2);
+      border-radius: 5px;
+      color: var(--green);
+      background: var(--green-dim);
+      font-family: var(--mono);
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    .price {
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+      margin-top: 25px;
+    }
+
+    .price-amount {
+      font-size: 61px;
+      line-height: 1;
+      letter-spacing: -0.075em;
+      font-weight: 680;
+    }
+
+    .price-period {
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+
+    .pricing-description {
+      margin: 13px 0 23px;
+      color: var(--text-secondary);
+      font-size: 11px;
+      line-height: 1.8;
+    }
+
+    .pricing-divider {
+      height: 1px;
+      margin: 21px 0;
+      background: var(--border);
+    }
+
+    .pricing-list {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .pricing-list li {
+      display: flex;
+      justify-content: space-between;
+      gap: 15px;
+      color: #bdc2d0;
+      font-size: 11px;
+    }
+
+    .pricing-list .included {
+      color: var(--green);
+      font-family: var(--mono);
+      font-size: 9px;
+    }
+
+    .pricing-cta {
+      width: 100%;
+      margin-top: 25px;
+    }
+
+    .checkout-note {
+      margin: 13px 0 0;
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 9px;
+      text-align: center;
+    }
+
+    /* FAQ */
+
+    .faq-section {
+      padding: 76px 0 90px;
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-layout {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 70px;
+    }
+
+    .faq-layout .section-heading {
+      margin-bottom: 0;
+    }
+
+    .faq-list {
+      border-top: 1px solid var(--border);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .faq-item summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 19px 0;
+      color: #e4e7ef;
+      font-size: 12px;
+      font-weight: 550;
+      cursor: pointer;
+      list-style: none;
+    }
+
+    .faq-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .faq-item summary::after {
+      content: "+";
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 16px;
+      font-weight: 400;
+      transition: transform 160ms ease;
+    }
+
+    .faq-item[open] summary::after {
+      color: var(--green);
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      padding: 0 20px 18px 0;
+      color: var(--text-secondary);
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    /* Footer */
+
+    .site-footer {
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      min-height: 85px;
+    }
+
+    .footer-brand {
+      color: #b9bfcd;
+      font-family: var(--mono);
+      font-size: 10px;
+      font-weight: 600;
+    }
+
+    .footer-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 18px;
+      color: var(--text-muted);
+      font-family: var(--mono);
+      font-size: 9px;
+    }
+
+    .footer-meta a {
+      transition: color 160ms ease;
+    }
+
+    .footer-meta a:hover {
+      color: var(--text);
+    }
+
+    /* Entrance animation */
+
+    @keyframes rise-in {
+      from {
+        opacity: 0;
+        transform: translateY(9px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .hero-inner > * {
+      animation: rise-in 600ms both;
+    }
+
+    .hero-inner > :nth-child(2) {
+      animation-delay: 70ms;
+    }
+
+    .hero-inner > :nth-child(3) {
+      animation-delay: 120ms;
+    }
+
+    .hero-inner > :nth-child(4) {
+      animation-delay: 170ms;
+    }
+
+    .hero-inner > :nth-child(5) {
+      animation-delay: 220ms;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    /* Responsive */
+
+    @media (max-width: 800px) {
+      .hero {
+        padding-top: 85px;
+      }
+
+      .preview-body {
+        padding: 15px;
+        gap: 10px;
+      }
+
+      .preview-panel {
+        padding: 15px;
+      }
+
+      .feature-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .feature-card:last-child {
+        grid-column: 1 / -1;
+      }
+
+      .pricing-layout {
+        grid-template-columns: 1fr minmax(260px, 340px);
+        gap: 30px;
+      }
+
+      .faq-layout {
+        grid-template-columns: 1fr;
+        gap: 35px;
+      }
+
+      .value-strip {
+        gap: 15px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .container {
+        width: calc(100% - 36px);
+      }
+
+      .site-header {
+        height: 62px;
+      }
+
+      .brand-icon {
+        width: 30px;
+        height: 30px;
+      }
+
+      .brand-name {
+        font-size: 10px;
+      }
+
+      .version {
+        font-size: 8px;
+      }
+
+      .header-nav {
+        gap: 12px;
+      }
+
+      .header-nav .nav-link {
+        display: none;
+      }
+
+      .header-cta {
+        min-height: 34px;
+        padding: 0 10px;
+        font-size: 10px;
+      }
+
+      .hero {
+        padding: 69px 0 57px;
+      }
+
+      .eyebrow {
+        font-size: 9px;
+      }
+
+      .hero h1 {
+        margin-top: 25px;
+        font-size: clamp(42px, 11vw, 58px);
+        letter-spacing: -0.075em;
+      }
+
+      .hero-description {
+        font-size: 14px;
+        line-height: 1.85;
+      }
+
+      .hero-actions {
+        width: 100%;
+        flex-direction: column;
+      }
+
+      .hero-actions .button {
+        width: 100%;
+      }
+
+      .hero-note {
+        max-width: 300px;
+        line-height: 1.8;
+      }
+
+      .preview-section {
+        padding-bottom: 66px;
+      }
+
+      .preview-topbar {
+        min-height: 44px;
+        padding-inline: 12px;
+      }
+
+      .preview-title {
+        font-size: 9px;
+      }
+
+      .preview-status {
+        font-size: 8px;
+      }
+
+      .preview-body {
+        grid-template-columns: 1fr;
+        padding: 12px;
+      }
+
+      .preview-panel {
+        padding: 16px;
+      }
+
+      .panel-main-value {
+        font-size: 32px;
+      }
+
+      .chart {
+        height: 100px;
+      }
+
+      .preview-footnote {
+        padding: 0 14px 15px;
+        line-height: 1.8;
+      }
+
+      .section {
+        padding: 64px 0;
+      }
+
+      .section-heading {
+        margin-bottom: 27px;
+      }
+
+      .section-heading h2 {
+        font-size: 34px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+        gap: 11px;
+      }
+
+      .feature-card:last-child {
+        grid-column: auto;
+      }
+
+      .feature-card {
+        padding: 20px;
+      }
+
+      .feature-symbol {
+        margin-top: 21px;
+      }
+
+      .value-strip {
+        grid-template-columns: 1fr;
+        gap: 22px;
+        padding: 25px 0;
+      }
+
+      .pricing-section {
+        padding: 65px 0 70px;
+      }
+
+      .pricing-layout {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .pricing-card {
+        padding: 23px;
+      }
+
+      .price-amount {
+        font-size: 57px;
+      }
+
+      .faq-section {
+        padding: 65px 0;
+      }
+
+      .footer-inner {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        gap: 13px;
+        padding: 23px 0;
+      }
+
+      .footer-meta {
+        justify-content: flex-start;
+        gap: 13px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+
+  <header class="site-header">
+    <div class="container header-inner">
+
+      <a class="brand" href="#" aria-label="Launch Math home">
+        <span class="brand-icon" aria-hidden="true">∑</span>
+
+        <span class="brand-name">
+          // LAUNCH_MATH
+          <span class="version">V1.0</span>
+        </span>
+      </a>
+
+      <nav class="header-nav" aria-label="Main navigation">
+        <a class="nav-link" href="#features">Features</a>
+        <a class="nav-link" href="#pricing">Pricing</a>
+        <a class="header-cta" href="#pricing">
+          Get lifetime access <span aria-hidden="true">↗</span>
+        </a>
+      </nav>
+
+    </div>
+  </header>
+
+
+  <main>
+
+    <!-- Hero -->
+
+    <section class="hero">
+      <div class="container hero-inner">
+
+        <div class="eyebrow">
+          <span class="status-dot" aria-hidden="true"></span>
+          FINANCIAL CLARITY FOR DIGITAL CREATORS
+        </div>
+
+        <h1>
+          Know what every<br>
+          sale is <span class="accent">actually worth.</span>
+        </h1>
+
+        <p class="hero-description">
+          Revenue looks good on a dashboard. Profit pays the bills.
+          Calculate your real margins, pressure-test your pricing,
+          and plan your launch around numbers that matter.
+        </p>
+
+        <div class="hero-actions">
+          <a class="button button-primary" href="#pricing">
+            Get Launch Math — $29
+            <span class="button-arrow" aria-hidden="true">→</span>
+          </a>
+
+          <a class="button button-secondary" href="#features">
+            Explore the toolkit
+          </a>
+        </div>
+
+        <p class="hero-note">
+          ONE PAYMENT. LIFETIME ACCESS. NO SUBSCRIPTION.
+        </p>
+
+      </div>
+    </section>
+
+
+    <!-- Product preview -->
+
+    <section class="preview-section" aria-label="Product preview">
+      <div class="container">
+
+        <div class="preview-shell">
+          <div class="preview">
+
+            <div class="preview-topbar">
+              <div class="preview-window" aria-hidden="true">
+                <span class="window-dot"></span>
+                <span class="window-dot"></span>
+                <span class="window-dot"></span>
+              </div>
+
+              <span class="preview-title">
+                launch_math / margin_analysis
+              </span>
+
+              <span class="preview-status">● LIVE MODEL</span>
+            </div>
+
+            <div class="preview-body">
+
+              <!-- Illustrative margin breakdown -->
+
+              <article class="preview-panel">
+                <span class="panel-label">Net revenue analysis</span>
+
+                <div class="panel-main-value">
+                  $23.17
+                </div>
+
+                <p class="panel-caption">
+                  Estimated proceeds per sale
+                </p>
+
+                <div class="breakdown">
+
+                  <div class="breakdown-row">
+                    <span>Product price</span>
+                    <strong>$29.00</strong>
+                  </div>
+
+                  <div class="breakdown-row">
+                    <span>Platform fee</span>
+                    <strong>−$3.48</strong>
+                  </div>
+
+                  <div class="breakdown-row">
+                    <span>Payment processing</span>
+                    <strong>−$1.35</strong>
+                  </div>
+
+                  <div class="breakdown-row">
+                    <span>Other costs</span>
+                    <strong>−$1.00</strong>
+                  </div>
+
+                  <div class="breakdown-row total">
+                    <span>Estimated net</span>
+                    <strong>$23.17</strong>
+                  </div>
+
+                </div>
+              </article>
+
+
+              <!-- Illustrative price comparison -->
+
+              <article class="preview-panel">
+
+                <div class="chart-heading">
+                  <span class="panel-label">Price sensitivity lab</span>
+                  <span class="chart-badge">SCENARIO</span>
+                </div>
+
+                <div class="panel-main-value">
+                  +18.4%
+                </div>
+
+                <p class="panel-caption">
+                  Illustrative net revenue difference
+                </p>
+
+                <div
+                  class="chart"
+                  role="img"
+                  aria-label="Illustrative bar chart comparing six hypothetical pricing scenarios"
+                >
+                  <div class="chart-bar" style="--height: 36%"></div>
+                  <div class="chart-bar" style="--height: 49%"></div>
+                  <div class="chart-bar" style="--height: 44%"></div>
+                  <div class="chart-bar" style="--height: 65%"></div>
+                  <div class="chart-bar highlight" style="--height: 84%"></div>
+                  <div class="chart-bar" style="--height: 72%"></div>
+                </div>
+
+                <div class="chart-labels">
+                  <span>$19</span>
+                  <span>$24</span>
+                  <span>$29</span>
+                  <span>$34</span>
+                  <span>$39</span>
+                  <span>$44</span>
+                </div>
+
+                <div class="chart-insight">
+                  <span class="insight-icon" aria-hidden="true">↗</span>
+
+                  <span>
+                    Compare hypothetical prices against estimated
+                    fees and conversion assumptions before choosing
+                    a launch price.
+                  </span>
+                </div>
+
+              </article>
+
+            </div>
+
+            <div class="preview-footnote">
+              PREVIEW DATA IS ILLUSTRATIVE · ACTUAL FEES AND RESULTS VARY
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- Features -->
+
+    <section class="section" id="features">
+      <div class="container">
+
+        <div class="section-heading">
+          <span class="section-kicker">01 / THE TOOLKIT</span>
+
+          <h2>
+            Three decisions.<br>
+            Better financial visibility.
+          </h2>
+
+          <p>
+            The numbers behind a digital product launch, organized
+            into one focused workspace.
+          </p>
+        </div>
+
+
+        <div class="feature-grid">
+
+          <!-- Feature 1 -->
+
+          <article class="feature-card">
+
+            <div class="feature-number">
+              <span>MODULE_01</span>
+              <span>01 / 03</span>
+            </div>
+
+            <div class="feature-symbol" aria-hidden="true">⌁</div>
+
+            <h3>Multi-Platform Fee Breakdown</h3>
+
+            <p>
+              Map platform fees, payment processing, refunds, and
+              other costs against your selling price. See your
+              estimated proceeds per sale instead of relying on
+              headline revenue.
+            </p>
+
+            <div class="feature-meta">
+              NET REVENUE ANALYSIS
+            </div>
+
+          </article>
+
+
+          <!-- Feature 2 -->
+
+          <article class="feature-card">
+
+            <div class="feature-number">
+              <span>MODULE_02</span>
+              <span>02 / 03</span>
+            </div>
+
+            <div class="feature-symbol" aria-hidden="true">⌘</div>
+
+            <h3>Price Sensitivity Lab</h3>
+
+            <p>
+              Compare different price points against adjustable
+              conversion assumptions, fees, and costs. Understand
+              how a pricing change could affect revenue and
+              estimated profit.
+            </p>
+
+            <div class="feature-meta">
+              PRICING SCENARIOS
+            </div>
+
+          </article>
+
+
+          <!-- Feature 3 -->
+
+          <article class="feature-card">
+
+            <div class="feature-number">
+              <span>MODULE_03</span>
+              <span>03 / 03</span>
+            </div>
+
+            <div class="feature-symbol" aria-hidden="true">↗</div>
+
+            <h3>Launch Window Forecaster</h3>
+
+            <p>
+              Model expected sales across a launch period using
+              your own assumptions. Explore conservative, expected,
+              and optimistic scenarios before committing to a plan.
+            </p>
+
+            <div class="feature-meta">
+              SCENARIO FORECASTING
+            </div>
+
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- Value proposition -->
+
+    <section class="section" aria-label="Product principles">
+      <div class="container">
+
+        <div class="value-strip">
+
+          <div class="value-item">
+            <span class="value-check" aria-hidden="true">✓</span>
+
+            <div>
+              <strong>No monthly bill</strong>
+              <span>One payment for lifetime access.</span>
+            </div>
+          </div>
+
+          <div class="value-item">
+            <span class="value-check" aria-hidden="true">✓</span>
+
+            <div>
+              <strong>Browser-based</strong>
+              <span>Use it without installing desktop software.</span>
+            </div>
+          </div>
+
+          <div class="value-item">
+            <span class="value-check" aria-hidden="true">✓</span>
+
+            <div>
+              <strong>Built around your inputs</strong>
+              <span>Model your costs and assumptions directly.</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- Pricing -->
+
+    <section class="pricing-section" id="pricing">
+      <div class="container">
+
+        <div class="pricing-layout">
+
+          <div class="pricing-copy">
+
+            <div class="section-heading">
+              <span class="section-kicker">02 / ACCESS</span>
+
+              <h2>
+                Your next launch deserves
+                better math.
+              </h2>
+
+              <p>
+                Get the financial toolkit for planning digital
+                product launches, evaluating prices, and understanding
+                what each sale could actually earn you.
+              </p>
+            </div>
+
+            <ul class="pricing-points">
+              <li>One payment instead of recurring subscription fees.</li>
+              <li>Three focused financial planning modules.</li>
+              <li>Use your own prices, costs, and assumptions.</li>
+              <li>Access from a supported modern browser.</li>
+            </ul>
+
+          </div>
+
+
+          <article class="pricing-card">
+
+            <span class="pricing-tag">
+              <span class="status-dot" aria-hidden="true"></span>
+              LIFETIME ACCESS
+            </span>
+
+            <div class="price">
+              <span class="price-amount">$29</span>
+              <span class="price-period">USD / once</span>
+            </div>
+
+            <p class="pricing-description">
+              A single purchase. No monthly payments.
+              No recurring subscription.
+            </p>
+
+            <div class="pricing-divider"></div>
+
+            <ul class="pricing-list">
+
+              <li>
+                <span>Platform fee breakdown</span>
+                <span class="included">INCLUDED</span>
+              </li>
+
+              <li>
+                <span>Price sensitivity scenarios</span>
+                <span class="included">INCLUDED</span>
+              </li>
+
+              <li>
+                <span>Launch window forecasts</span>
+                <span class="included">INCLUDED</span>
+              </li>
+
+              <li>
+                <span>Lifetime access</span>
+                <span class="included">INCLUDED</span>
+              </li>
+
+            </ul>
+
+            <!--
+              IMPORTANT:
+              Replace YOUR_GUMROAD_PRODUCT_URL with your real
+              Gumroad or Payhip checkout URL.
+
+              Example format:
+              https://yourname.gumroad.com/l/yourproduct
+
+              Do not publish with the placeholder still present.
+            -->
+
+            <a
+              class="button button-primary pricing-cta"
+              id="checkout-button"
+              href="https://YOUR_GUMROAD_PRODUCT_URL"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Get lifetime access
+              <span class="button-arrow" aria-hidden="true">→</span>
+            </a>
+
+            <p class="checkout-note">
+              SECURE CHECKOUT VIA YOUR PAYMENT PROVIDER
+            </p>
+
+          </article>
+
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- FAQ -->
+
+    <section class="faq-section" id="faq">
+      <div class="container">
+
+        <div class="faq-layout">
+
+          <div class="section-heading">
+            <span class="section-kicker">03 / FAQ</span>
+
+            <h2>
+              Before you launch.
+            </h2>
+
+            <p>
+              The essentials, without the fine-print maze.
+            </p>
+          </div>
+
+
+          <div class="faq-list">
+
+            <details class="faq-item">
+              <summary>What is Launch Math?</summary>
+
+              <div class="faq-answer">
+                Launch Math is designed to help digital creators
+                evaluate product pricing, estimate per-sale proceeds,
+                account for selling costs, and plan launches using
+                adjustable financial assumptions.
+              </div>
+            </details>
+
+
+            <details class="faq-item">
+              <summary>Is the $29 payment recurring?</summary>
+
+              <div class="faq-answer">
+                No. The intended offer is a one-time $29 payment for
+                lifetime access. Your checkout provider must be
+                configured to sell a one-time purchase, not a
+                subscription.
+              </div>
+            </details>
+
+
+            <details class="faq-item">
+              <summary>Which selling platforms are supported?</summary>
+
+              <div class="faq-answer">
+                The planned fee-analysis workflow is designed around
+                configurable platform fees and transaction costs.
+                Confirm the actual supported platforms and their
+                available fee presets in your product before
+                advertising specific integrations.
+              </div>
+            </details>
+
+
+            <details class="faq-item">
+              <summary>Are the forecasts guaranteed?</summary>
+
+              <div class="faq-answer">
+                No. Forecasts depend on the assumptions entered,
+                including sales volume, conversion rates, pricing,
+                fees, and expenses. Actual results can differ.
+                Launch Math is a planning tool, not a guarantee
+                of revenue or profit.
+              </div>
+            </details>
+
+
+            <details class="faq-item">
+              <summary>Does Launch Math require installation?</summary>
+
+              <div class="faq-answer">
+                Launch Math is intended to run in a modern web
+                browser. The exact availability of saved projects,
+                offline access, account features, and device
+                synchronization depends on the implemented product.
+              </div>
+            </details>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- Footer -->
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+
+      <a class="footer-brand" href="#" aria-label="Launch Math home">
+        // LAUNCH_MATH
+      </a>
+
+      <div class="footer-meta">
+        <span>BUILT FOR INDEPENDENT CREATORS</span>
+        <a href="#features">FEATURES</a>
+        <a href="#pricing">PRICING</a>
+        <span>© <span id="current-year">2026</span></span>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <!-- Minimal JavaScript: no dependencies -->
+
+  <script>
+    (() => {
+      "use strict";
+
+      // Keep the copyright year current.
+      const yearElement = document.getElementById("current-year");
+
+      if (yearElement) {
+        yearElement.textContent = String(new Date().getFullYear());
+      }
+
+      // Prevent accidental publication with an unconfigured checkout.
+      const checkoutButton = document.getElementById("checkout-button");
+
+      if (checkoutButton) {
+        const checkoutURL = checkoutButton.getAttribute("href") || "";
+
+        const isPlaceholder =
+          checkoutURL.includes("YOUR_GUMROAD_PRODUCT_URL") ||
+          checkoutURL.includes("YOUR_PAYHIP_PRODUCT_URL");
+
+        if (isPlaceholder) {
+          checkoutButton.addEventListener("click", (event) => {
+            event.preventDefault();
+
+            console.warn(
+              "Launch Math: Configure the real Gumroad or Payhip " +
+              "checkout URL before publishing."
+            );
+
+            const originalText = checkoutButton.innerHTML;
+
+            checkoutButton.textContent = "Checkout not configured";
+            checkoutButton.setAttribute("aria-live", "polite");
+
+            window.setTimeout(() => {
+              checkoutButton.innerHTML = originalText;
+            }, 2200);
+          });
+        }
+      }
+    })();
+  </script>
+
+</body>
+</html>
+```
